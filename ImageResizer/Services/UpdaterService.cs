@@ -16,16 +16,14 @@ namespace BriceLambson.ImageResizer.Services
     using System.ServiceModel.Syndication;
     using System.Threading.Tasks;
     using System.Xml;
-    using BriceLambson.ImageResizer.Helpers;
-    using BriceLambson.ImageResizer.Models;
     using BriceLambson.ImageResizer.Extensions;
-    using System.Threading;
+    using BriceLambson.ImageResizer.Models;
 
     internal class UpdaterService
     {
-        public async Task<Update> CheckForUpdatesAsync(string updateUrl, UpdateFilter updateFilter)
+        public async Task<Update> CheckForUpdatesAsync(string updateUrl)
         {
-            Debug.Assert(!String.IsNullOrWhiteSpace(updateUrl));
+            Debug.Assert(!string.IsNullOrWhiteSpace(updateUrl), "updateUrl is null or empty.");
 
             var reader = XmlReader.Create(updateUrl);
             var formatter = new Atom10FeedFormatter();
@@ -33,11 +31,36 @@ namespace BriceLambson.ImageResizer.Services
             await formatter.ReadFromAsync(reader);
 
             return (from i in formatter.Feed.Items
-                    let u = UpdateHelper.FromSyndicationItem(i)
+                    let u = FromSyndicationItem(i)
                     where u.Version > Assembly.GetExecutingAssembly().GetName().Version
-                        && ((int)updateFilter & (int)u.ReleaseStatus) != 0
                     orderby u.LastUpdatedTime descending
                     select u).FirstOrDefault();
+        }
+
+        private static Update FromSyndicationItem(SyndicationItem item)
+        {
+            Debug.Assert(item != null, "item is null.");
+
+            var update = new Update();
+            Version version;
+
+            if (Version.TryParse(item.Title.Text, out version))
+            {
+                update.Version = version;
+            }
+
+            update.LastUpdatedTime = item.LastUpdatedTime;
+
+            var link = item.Links.FirstOrDefault(
+                l => String.IsNullOrWhiteSpace(l.RelationshipType)
+                    || l.RelationshipType.Equals("alternate", StringComparison.OrdinalIgnoreCase));
+
+            if (link != null)
+            {
+                update.Url = link.GetAbsoluteUri();
+            }
+
+            return update;
         }
     }
 }

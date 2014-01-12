@@ -12,9 +12,6 @@ namespace BriceLambson.ImageResizer.ViewModels
     using System;
     using System.Diagnostics;
     using System.Linq;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using BriceLambson.ImageResizer.Helpers;
     using BriceLambson.ImageResizer.Models;
     using BriceLambson.ImageResizer.Properties;
     using BriceLambson.ImageResizer.Services;
@@ -28,7 +25,7 @@ namespace BriceLambson.ImageResizer.ViewModels
 
         public ShellViewModel(string[] args)
         {
-            Debug.Assert(args != null);
+            Debug.Assert(args != null, "args is null.");
 
             _args = args;
 
@@ -70,7 +67,7 @@ namespace BriceLambson.ImageResizer.ViewModels
 
         private void HandleInputPageCompleted(object sender, InputPageCompletedEventArgs e)
         {
-            Debug.Assert(e != null);
+            Debug.Assert(e != null, "e is null.");
 
             if (e.Cancelled)
             {
@@ -86,7 +83,7 @@ namespace BriceLambson.ImageResizer.ViewModels
 
         private void HandleProgressPageCompleted(object sender, ProgressPageCompletedEventArgs e)
         {
-            Debug.Assert(e != null);
+            Debug.Assert(e != null, "e is null.");
 
             if (!e.Errors.Any())
             {
@@ -110,9 +107,7 @@ namespace BriceLambson.ImageResizer.ViewModels
 
             try
             {
-                update = await new UpdaterService().CheckForUpdatesAsync(
-                    AdvancedSettings.Default.UpdateUrl,
-                    AdvancedSettings.Default.UpdateFilter);
+                update = await new UpdaterService().CheckForUpdatesAsync(AdvancedSettings.Default.UpdateUrl);
             }
             catch
             {

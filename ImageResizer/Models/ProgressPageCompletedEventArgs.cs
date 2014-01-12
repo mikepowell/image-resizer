@@ -12,7 +12,6 @@ namespace BriceLambson.ImageResizer.Models
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
 
     internal class ProgressPageCompletedEventArgs : EventArgs
     {
@@ -20,7 +19,7 @@ namespace BriceLambson.ImageResizer.Models
 
         public ProgressPageCompletedEventArgs(ICollection<ResizeError> errors)
         {
-            Debug.Assert(errors != null);
+            Debug.Assert(errors != null, "errors is null.");
 
             _errors = errors;
         }

@@ -13,7 +13,6 @@ namespace BriceLambson.ImageResizer.Services
     using System.Diagnostics;
     using System.Globalization;
     using System.IO;
-    using System.Threading;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using BriceLambson.ImageResizer.Helpers;
@@ -31,11 +30,16 @@ namespace BriceLambson.ImageResizer.Services
         private readonly ResizeSize _size;
         private readonly RenamingService _renamer;
 
-        public ResizingService(int qualityLevel, bool shrinkOnly, bool ignoreRotations, ResizeSize size, RenamingService renamer)
+        public ResizingService(
+            int qualityLevel,
+            bool shrinkOnly,
+            bool ignoreRotations,
+            ResizeSize size,
+            RenamingService renamer)
         {
-            Debug.Assert(qualityLevel >= 1 && qualityLevel <= 100);
-            Debug.Assert(size != null);
-            Debug.Assert(renamer != null);
+            Debug.Assert(qualityLevel >= 1 && qualityLevel <= 100, "qualityLevel is not between 1 and 100.");
+            Debug.Assert(size != null, "size is null.");
+            Debug.Assert(renamer != null, "renamer is null.");
 
             _qualityLevel = qualityLevel;
             _shrinkOnly = shrinkOnly;
@@ -46,7 +50,7 @@ namespace BriceLambson.ImageResizer.Services
 
         public string Resize(string sourcePath)
         {
-            Debug.Assert(!String.IsNullOrWhiteSpace(sourcePath));
+            Debug.Assert(!string.IsNullOrWhiteSpace(sourcePath), "sourcePath is null or empty.");
 
             var encoderDefaulted = false;
             BitmapDecoder decoder;
@@ -127,14 +131,14 @@ namespace BriceLambson.ImageResizer.Services
                 File.Move(destinationPath, finalPath);
             }
 
-            Debug.Assert(!String.IsNullOrWhiteSpace(finalPath));
+            Debug.Assert(!string.IsNullOrWhiteSpace(finalPath), "finalPath is null or empty.");
 
             return finalPath;
         }
 
         private void SetEncoderSettings(BitmapEncoder encoder)
         {
-            Debug.Assert(encoder != null);
+            Debug.Assert(encoder != null, "encoder is null.");
 
             var jpegEncoder = encoder as JpegBitmapEncoder;
 
@@ -148,7 +152,7 @@ namespace BriceLambson.ImageResizer.Services
         //       combination of transforms to be performed on the image
         private Transform GetTransform(BitmapSource source)
         {
-            Debug.Assert(source != null);
+            Debug.Assert(source != null, "source is null.");
 
             var width = _size.Width;
             var height = _size.Height;
@@ -187,7 +191,8 @@ namespace BriceLambson.ImageResizer.Services
             }
             else if (_size.Mode != Mode.Stretch)
             {
-                throw new NotSupportedException(String.Format(CultureInfo.InvariantCulture, "The mode '{0}' is not yet supported.", _size.Mode));
+                throw new NotSupportedException(
+                    string.Format(CultureInfo.InvariantCulture, "The mode '{0}' is not yet supported.", _size.Mode));
             }
 
             if (_shrinkOnly)

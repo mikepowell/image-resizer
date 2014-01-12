@@ -17,8 +17,8 @@ namespace BriceLambson.ImageResizer.Helpers
     {
         public static string ReplaceTokens(string template, IDictionary<string, string> tokens)
         {
-            Debug.Assert(template != null);
-            Debug.Assert(tokens != null);
+            Debug.Assert(!string.IsNullOrWhiteSpace(template), "template is null or empty.");
+            Debug.Assert(tokens != null, "tokens is null.");
 
             return Regex.Replace(
                 template,

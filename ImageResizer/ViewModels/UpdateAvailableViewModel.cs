@@ -11,7 +11,6 @@ namespace BriceLambson.ImageResizer.ViewModels
 {
     using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
-    using System.Diagnostics.Contracts;
     using System.Windows.Input;
     using BriceLambson.ImageResizer.Models;
     using BriceLambson.ImageResizer.Properties;
@@ -26,7 +25,7 @@ namespace BriceLambson.ImageResizer.ViewModels
 
         public UpdateAvailableViewModel(Update update)
         {
-            Debug.Assert(update != null);
+            Debug.Assert(update != null, "update is null.");
 
             _downloadCommand = new RelayCommand(Download);
             _closeCommand = new RelayCommand(Close);

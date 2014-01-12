@@ -40,7 +40,7 @@ namespace BriceLambson.ImageResizer.ViewModels
 
         public ProgressPageViewModel(string[] args)
         {
-            Debug.Assert(args != null);
+            Debug.Assert(args != null, "args is null.");
 
             Messenger.Default.Register<ProgressPageLoadedMessage>(this, m => OnLoadedAsync());
 
@@ -154,8 +154,8 @@ namespace BriceLambson.ImageResizer.ViewModels
 
         private void AddError(string image, Exception ex)
         {
-            Debug.Assert(!String.IsNullOrWhiteSpace(image));
-            Debug.Assert(ex != null);
+            Debug.Assert(!string.IsNullOrWhiteSpace(image), "image is null or empty.");
+            Debug.Assert(ex != null, "ex is null.");
 
             lock (_errors)
             {

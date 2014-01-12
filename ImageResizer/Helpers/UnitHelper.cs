@@ -18,8 +18,8 @@ namespace BriceLambson.ImageResizer.Helpers
     {
         public static double ConvertToScale(double value, Unit unit, int originalPixels, double dpi)
         {
-            Debug.Assert(originalPixels > 0);
-            Debug.Assert(dpi > 0);
+            Debug.Assert(originalPixels > 0, "originalPixels is less than or equal to 0.");
+            Debug.Assert(dpi > 0, "dpi is less than or equal to 0.");
 
             switch (unit)
             {
@@ -36,7 +36,8 @@ namespace BriceLambson.ImageResizer.Helpers
                     return ConvertToScale(value * 50 / 127, Unit.Inches, originalPixels, dpi);
             }
 
-            throw new NotSupportedException(String.Format(CultureInfo.InvariantCulture, "The unit '{0}' is not yet supported.", unit));
+            throw new NotSupportedException(
+                string.Format(CultureInfo.InvariantCulture, "The unit '{0}' is not yet supported.", unit));
         }
     }
 }

@@ -86,7 +86,6 @@
     <Compile Include="Extensions\Atom10FeedFormatterExtensions.cs" />
     <Compile Include="Helpers\ParametersHelper.cs" />
     <Compile Include="Helpers\TemplatingEngine.cs" />
-    <Compile Include="Helpers\UpdateHelper.cs" />
     <Compile Include="Models\ProgressPageLoadedMessage.cs" />
     <Compile Include="Models\ResizeError.cs" />
     <Compile Include="Models\ShellLoadedMessage.cs" />
@@ -95,9 +94,7 @@
     <Compile Include="Models\Mode.cs" />
     <Compile Include="Models\Parameters.cs" />
     <Compile Include="Models\ResizeSize.cs" />
-    <Compile Include="Models\ReleaseStatus.cs" />
     <Compile Include="Models\Unit.cs" />
-    <Compile Include="Models\UpdateFilter.cs" />
     <Compile Include="Models\CloseShellMessage.cs" />
     <Compile Include="Properties\AdvancedSettings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -111,6 +108,7 @@
     <Compile Include="Models\ShowAdvancedMessage.cs" />
     <Compile Include="Models\UpdateAvailableMessage.cs" />
     <Compile Include="Services\UpdaterService.cs" />
+    <Compile Include="ViewModels\AdvancedViewModel.cs" />
     <Compile Include="ViewModels\InputPageViewModel.cs" />
     <Compile Include="Models\InputPageCompletedEventArgs.cs" />
     <Compile Include="Models\ProgressPageCompletedEventArgs.cs" />
@@ -122,6 +120,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\UpdateAvailableViewModel.cs" />
+    <Compile Include="Views\AdvancedWindow.xaml.cs">
+      <DependentUpon>AdvancedWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DoubleValueConverter.cs" />
     <Compile Include="Views\ModeValueLocalizer.cs" />
     <Compile Include="Views\InputPageView.xaml.cs">
@@ -186,6 +187,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\AdvancedWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\InputPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

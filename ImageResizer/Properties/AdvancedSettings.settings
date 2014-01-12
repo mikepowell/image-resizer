@@ -2,9 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
   <Profiles />
   <Settings>
-    <Setting Name="UpdateFilter" Type="BriceLambson.ImageResizer.Models.UpdateFilter" Scope="Application">
-      <Value Profile="(Default)">Stable</Value>
-    </Setting>
     <Setting Name="UpdateUrl" Type="System.String" Scope="Application">
       <Value Profile="(Default)">http://imageresizer.azurewebsites.net/releases.xml</Value>
     </Setting>

@@ -9,7 +9,6 @@
 
 namespace BriceLambson.ImageResizer.Services
 {
-    using System;
     using System.Diagnostics;
     using System.Globalization;
     using System.IO;
@@ -26,9 +25,9 @@ namespace BriceLambson.ImageResizer.Services
 
         public RenamingService(string fileNameFormat, string outputDirectory, bool replaceOriginals, ResizeSize size)
         {
-            Debug.Assert(!String.IsNullOrWhiteSpace(fileNameFormat));
-            Debug.Assert(fileNameFormat.Contains("{0}"));
-            Debug.Assert(size != null);
+            Debug.Assert(!string.IsNullOrWhiteSpace(fileNameFormat), "fileNameFormat is null or empty.");
+            Debug.Assert(fileNameFormat.Contains("{0}"), "fileNameFormat does not contain '{0}'");
+            Debug.Assert(size != null, "size is null.");
 
             _fileNameFormat = fileNameFormat;
             _outputDirectory = outputDirectory;
@@ -38,16 +37,14 @@ namespace BriceLambson.ImageResizer.Services
 
         public string Rename(string sourcePath)
         {
-            Debug.Assert(!String.IsNullOrWhiteSpace(sourcePath));
+            Debug.Assert(!string.IsNullOrWhiteSpace(sourcePath), "sourcePath is null or empty.");
 
             if (_outputDirectory == null && _replaceOriginals)
             {
                 return sourcePath;
             }
 
-            var directoryName
-                = _outputDirectory
-                    ?? Path.GetDirectoryName(sourcePath);
+            var directoryName = _outputDirectory ?? Path.GetDirectoryName(sourcePath);
             var fileName = Path.GetFileNameWithoutExtension(sourcePath);
             var extension = Path.GetExtension(sourcePath);
 
@@ -70,18 +67,22 @@ namespace BriceLambson.ImageResizer.Services
                 _size.Name
             };
 
-            var destinationFileName = String.Format(CultureInfo.CurrentCulture, _fileNameFormat, replacementItems);
+            var destinationFileName = string.Format(CultureInfo.CurrentCulture, _fileNameFormat, replacementItems);
             var destinationPath = Path.Combine(directoryName, destinationFileName + extension);
             var i = 1;
 
             // Ensure the file name is unique
             while (File.Exists(destinationPath))
             {
-                var uniqueFileName = String.Format(CultureInfo.CurrentCulture, UniqueFileNameFormat, destinationFileName, ++i);
+                var uniqueFileName = string.Format(
+                    CultureInfo.CurrentCulture,
+                    UniqueFileNameFormat,
+                    destinationFileName,
+                    ++i);
                 destinationPath = Path.Combine(directoryName, uniqueFileName + extension);
             }
 
-            Debug.Assert(!String.IsNullOrWhiteSpace(destinationPath));
+            Debug.Assert(!string.IsNullOrWhiteSpace(destinationPath), "destinationPath is null or empty.");
 
             return destinationPath;
         }

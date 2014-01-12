@@ -9,7 +9,6 @@
 
 namespace BriceLambson.ImageResizer.Helpers
 {
-    using System;
     using System.Diagnostics;
     using System.IO;
     using System.IO.Pipes;
@@ -21,7 +20,7 @@ namespace BriceLambson.ImageResizer.Helpers
     {
         public static async Task<Parameters> ParseAsync(string[] args)
         {
-            Debug.Assert(args != null);
+            Debug.Assert(args != null, "args is null.");
 
             var parameters = new Parameters();
 
@@ -39,12 +38,14 @@ namespace BriceLambson.ImageResizer.Helpers
 
                     // NOTE: In theory, this isn't always Unicode, but for all modern platforms, we
                     //       can safely make that assumption
-                    using (var readPipe = new StreamReader(new AnonymousPipeClientStream(pipeHandleAsString), Encoding.Unicode))
+                    using (var readPipe = new StreamReader(
+                        new AnonymousPipeClientStream(pipeHandleAsString),
+                        Encoding.Unicode))
                     {
                         // TODO: Set a timeout for the first read?
                         var selectedFile = await readPipe.ReadLineAsync();
 
-                        while (selectedFile != String.Empty)
+                        while (selectedFile != string.Empty)
                         {
                             parameters.SelectedFiles.Add(selectedFile);
 

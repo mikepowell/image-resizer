@@ -12,7 +12,6 @@ namespace BriceLambson.ImageResizer.ViewModels
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Diagnostics.Contracts;
     using System.Windows.Input;
     using BriceLambson.ImageResizer.Models;
     using GalaSoft.MvvmLight;
@@ -25,7 +24,7 @@ namespace BriceLambson.ImageResizer.ViewModels
 
         public ResultsPageViewModel(ICollection<ResizeError> errors)
         {
-            Debug.Assert(errors != null);
+            Debug.Assert(errors != null, "errors is null.");
 
             _closeCommand = new RelayCommand(Close);
 

@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 // <copyright file="Settings.cs" company="Brice Lambson">
-//     Copyright (c) 2011 Brice Lambson. All rights reserved.
+//     Copyright (c) 2011-2013 Brice Lambson. All rights reserved.
 //
 //     The use of this software is governed by the Microsoft Public License
 //     which is included with this distribution.
@@ -26,20 +26,12 @@ namespace BriceLambson.ImageResizer.Properties
 
                 return defaultSizes[SelectedIndex];
             }
-
             set
             {
                 var defaultSizes = AdvancedSettings.Default.DefaultSizes;
                 var index = defaultSizes.IndexOf(value);
 
-                if (index == -1)
-                {
-                    SelectedIndex = defaultSizes.Count;
-                }
-                else
-                {
-                    SelectedIndex = index;
-                }
+                SelectedIndex = index == -1 ? defaultSizes.Count : index;
             }
         }
     }
